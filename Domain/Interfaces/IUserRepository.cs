@@ -1,4 +1,4 @@
-﻿using Proyecto.Domain.Entities;
+﻿using Proyecto.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,14 +12,15 @@ namespace Proyecto.Domain.Interfaces
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        Task<Usuario?> GetUserByEmail(string email);
+        Task<AppUser?> GetUserByEmail(string email);
 
         /// <summary>
         /// Para crear un nuevo usuario en la base de datos
         /// </summary>
         /// <param name="usuario"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        Task<Usuario> CreateUser(Usuario usuario);
+        Task<AppUser> CreateUser(AppUser usuario, string password);
 
         /// <summary>
         /// Para agregar un usuario a un rol especifico. lo que es util para gestionar permisos y accesos dentro de la aplicacion
@@ -27,7 +28,7 @@ namespace Proyecto.Domain.Interfaces
         /// <param name="usuario"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        Task<Usuario> AddToRoleAsync(Usuario usuario, string roleName);
+        Task<AppUser> AddToRoleAsync(AppUser usuario, string roleName);
 
         /// <summary>
         /// Para validar que la contraseña pertenece al usuario

@@ -1,4 +1,4 @@
-﻿using Proyecto.Domain.Entities;
+﻿using Proyecto.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +13,6 @@ namespace Proyecto.Domain.Interfaces
         /// <param name="usuario"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        string GenerateToken(Usuario usuario, IList<string> roles);
+        string GenerateToken(AppUser usuario, IList<string> roles);
     }
 }
