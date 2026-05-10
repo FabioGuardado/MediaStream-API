@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Entities.Media;
-using Proyecto.Infrastructure.Identity;
 
 namespace Proyecto.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<AppIdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
-        public DbSet<User> Users => Set<User>();
-
-        public DbSet<Role> Roles => Set<Role>();
+        public ApplicationDbContext(
+           DbContextOptions<ApplicationDbContext> options)
+           : base(options)
+        {
+        }
 
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 

@@ -13,6 +13,6 @@ namespace Proyecto.Domain.Interfaces
         /// <param name="usuario"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        string GenerateToken(User usuario, IList<string> roles);
+        string GenerateToken(AppUser usuario, IList<string> roles);
     }
 }

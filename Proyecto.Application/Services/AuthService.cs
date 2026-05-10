@@ -16,9 +16,9 @@ namespace Proyecto.Application.Services
             _userRepository = userRepository;
             _jwtService = jwtService;
         }
-        public async Task<User> RegisterUser(User usuario)
+        public async Task<AppUser> RegisterUser(AppUser user, string password)
         {
-            var result = await _userRepository.CreateUser(usuario);
+            var result = await _userRepository.CreateUser(user, password);
 
             return result;
         }

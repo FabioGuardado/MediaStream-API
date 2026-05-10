@@ -35,9 +35,9 @@ namespace Proyecto.Domain.Entities.Media
 
         public MediaType MediaType { get; set; }
 
-        public Guid UploadedByUserId { get; set; }
+        public string UploadedByUserId { get; set; } = string.Empty;
 
-        public User UploadedByUser { get; set; } = null!;
+        public AppUser UploadedByUser { get; set; } = null!;
 
         public Guid CategoryId { get; set; }
 

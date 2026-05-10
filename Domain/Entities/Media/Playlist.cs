@@ -12,9 +12,9 @@ namespace Proyecto.Domain.Entities.Media
 
         public string? Description { get; set; }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
-        public User User { get; set; } = null!;
+        public AppUser User { get; set; } = null!;
 
         public ICollection<PlaylistMedia> PlaylistItems { get; set; }
             = new List<PlaylistMedia>();

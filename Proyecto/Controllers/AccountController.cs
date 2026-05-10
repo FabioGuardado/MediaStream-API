@@ -18,20 +18,25 @@ namespace Proyecto.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
         {
-            User newUser = new User()
+            AppUser newUser = new AppUser()
             {
                 FirstName = registerUserDto.FirstName,
                 LastName = registerUserDto.LastName,
-                Tel = registerUserDto.Phone,
+                PhoneNumber = registerUserDto.Phone,
                 Email = registerUserDto.Email,
-                Password = registerUserDto.Password
+                UserName = registerUserDto.Email
             };
-            var result = await _authService.RegisterUser(newUser);
+
+            var result = await _authService.RegisterUser(
+                newUser,
+                registerUserDto.Password
+            );
 
             if (result != null)
             {
                 return Ok("Registro exitoso");
             }
+
             return BadRequest("Error al registrar el usuario");
         }
 

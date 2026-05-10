@@ -1,60 +1,64 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Interfaces;
-using Proyecto.Infrastructure.Identity;
-using Proyecto.Infrastructure.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Proyecto.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public readonly UserManager<AppIdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserRepository(UserManager<AppIdentityUser> userManager)
+        public UserRepository(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<User> AddToRoleAsync(User usuario, string roleName)
+        public async Task<AppUser> AddToRoleAsync(
+            AppUser usuario,
+            string roleName)
         {
-            var userDb = await _userManager.FindByEmailAsync(usuario.Email);
-            var result = await _userManager.AddToRoleAsync(userDb, roleName);
-            return usuario;
+            var userDb = await _userManager.FindByEmailAsync(usuario.Email!);
+
+            if (userDb == null)
+            {
+                return null!;
+            }
+
+            await _userManager.AddToRoleAsync(userDb, roleName);
+
+            return userDb;
         }
 
-        public async Task<User> CreateUser(User usuario)
+        public async Task<AppUser?> CreateUser(
+            AppUser usuario,
+            string password)
         {
-            var appIdentityUser = usuario.ToAppIdentityUser();
-            var result = await _userManager.CreateAsync(appIdentityUser, usuario.Password);
+            var result = await _userManager.CreateAsync(usuario, password);
 
             if (result.Succeeded)
             {
-                var newUser = await _userManager.FindByEmailAsync(usuario.Email);
-                usuario.Id = new Guid(newUser.Id);
-
                 return usuario;
             }
 
             return null;
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<AppUser?> GetUserByEmail(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            return user?.ToDomainUser();
+            return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<bool> CheckPasswordAsync(string userId, string password)
+        public async Task<bool> CheckPasswordAsync(
+            string userId,
+            string password)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
             if (user == null)
             {
                 return false;
             }
+
             return await _userManager.CheckPasswordAsync(user, password);
         }
 
@@ -66,6 +70,12 @@ namespace Proyecto.Infrastructure.Persistence.Repositories
         public async Task<List<string>> GetUserRoles(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new List<string>();
+            }
+
             var roles = await _userManager.GetRolesAsync(user);
 
             return roles.ToList();

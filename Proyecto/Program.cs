@@ -2,15 +2,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proyecto.Application.Services;
+using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Configuration;
 using Proyecto.Domain.Interfaces;
 using Proyecto.Infrastructure;
 using Proyecto.Infrastructure.Persistence;
 using Proyecto.Infrastructure.Persistence.Repositories;
 using Proyecto.Infrastructure.Security;
-using Proyecto.Domain.Entities;
-using Proyecto.Infrastructure.Identity;
-using Proyecto.Domain.Entities.Identity;
+
 // Importante para ver el método AddInfrastructure
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +30,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<AppIdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     // Configure Identity to allow user creation without email confirmation
     options.SignIn.RequireConfirmedAccount = false;
@@ -110,15 +109,16 @@ using (var scope = app.Services.CreateScope())
 
     if (!await userRepository.UserExists("admin@admin.com"))
     {
-        var result = userRepository.CreateUser(new User()
-        {
-            Email = "admin@admin.com",
-            PasswordHash = "Admin123!",
-            FirstName = "Admin",
-            LastName = "Admin"
-        }).Result;
-
-        var resultUserToRole = userRepository.AddToRoleAsync(result, "Admin").Result;
+        var result = userRepository.CreateUser(
+    new AppUser()
+    {
+        Email = "admin@admin.com",
+        UserName = "admin@admin.com",
+        FirstName = "Admin",
+        LastName = "Admin"
+    },
+    "Admin123!"
+).Result;
     }
 }
 app.Run();
