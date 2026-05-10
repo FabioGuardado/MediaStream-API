@@ -10,6 +10,7 @@ using Proyecto.Infrastructure.Persistence.Repositories;
 using Proyecto.Infrastructure.Security;
 using Proyecto.Domain.Entities;
 using Proyecto.Infrastructure.Identity;
+using Proyecto.Domain.Entities.Identity;
 // Importante para ver el método AddInfrastructure
 
 var builder = WebApplication.CreateBuilder(args);
@@ -109,10 +110,10 @@ using (var scope = app.Services.CreateScope())
 
     if (!await userRepository.UserExists("admin@admin.com"))
     {
-        var result = userRepository.CreateUser(new Usuario()
+        var result = userRepository.CreateUser(new User()
         {
             Email = "admin@admin.com",
-            Password = "Admin123!",
+            PasswordHash = "Admin123!",
             FirstName = "Admin",
             LastName = "Admin"
         }).Result;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proyecto.Application.Services;
-using Proyecto.Domain.Entities;
+using Proyecto.Domain.Entities.Identity;
 using Proyecto.DTOs;
 
 namespace Proyecto.Controllers
@@ -18,7 +18,7 @@ namespace Proyecto.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
         {
-            Usuario newUser = new Usuario()
+            User newUser = new User()
             {
                 FirstName = registerUserDto.FirstName,
                 LastName = registerUserDto.LastName,

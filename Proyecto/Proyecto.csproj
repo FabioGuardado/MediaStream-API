@@ -13,6 +13,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
   </ItemGroup>
@@ -21,6 +25,13 @@
     <ProjectReference Include="..\Domain\Proyecto.Domain.csproj" />
     <ProjectReference Include="..\Proyecto.Application\Proyecto.Application.csproj" />
     <ProjectReference Include="..\Proyecto.Infrastructure\Proyecto.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Media\Audios\" />
+    <Folder Include="Media\Images\" />
+    <Folder Include="Media\Thumbnails\" />
+    <Folder Include="Media\Videos\" />
   </ItemGroup>
 
 </Project>

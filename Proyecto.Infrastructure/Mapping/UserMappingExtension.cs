@@ -1,4 +1,4 @@
-﻿using Proyecto.Domain.Entities;
+﻿using Proyecto.Domain.Entities.Identity;
 using Proyecto.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Proyecto.Infrastructure.Mapping
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns></returns>
-        public static AppIdentityUser ToAppIdentityUser(this Usuario usuario)
+        public static AppIdentityUser ToAppIdentityUser(this User usuario)
         {
             return new AppIdentityUser
             {
@@ -28,9 +28,9 @@ namespace Proyecto.Infrastructure.Mapping
         /// </summary>
         /// <param name="identityUser"></param>
         /// <returns></returns>
-        public static Usuario ToDomainUser(this AppIdentityUser identityUser)
+        public static User ToDomainUser(this AppIdentityUser identityUser)
         {
-            return new Usuario
+            return new User
             {
                 Id = Guid.Parse(identityUser.Id),
                 Email = identityUser.Email,

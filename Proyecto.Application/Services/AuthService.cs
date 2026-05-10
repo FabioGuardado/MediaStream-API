@@ -1,4 +1,4 @@
-﻿using Proyecto.Domain.Entities;
+﻿using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace Proyecto.Application.Services
             _userRepository = userRepository;
             _jwtService = jwtService;
         }
-        public async Task<Usuario> RegisterUser(Usuario usuario)
+        public async Task<User> RegisterUser(User usuario)
         {
             var result = await _userRepository.CreateUser(usuario);
 

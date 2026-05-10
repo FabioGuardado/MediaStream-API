@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Proyecto.Domain.Entities;
+using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Proyecto.Infrastructure.Security
         {
             _configuration = configuration;
         }
-        public string GenerateToken(Usuario usuario, IList<string> roles)
+        public string GenerateToken(User usuario, IList<string> roles)
         {
             // reclamaciones o caracteristicas que identifican al usuario
             var claims = new List<Claim>() {

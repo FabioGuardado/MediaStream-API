@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Proyecto.Domain.Entities;
+using Proyecto.Domain.Entities.Identity;
 using Proyecto.Domain.Interfaces;
 using Proyecto.Infrastructure.Identity;
 using Proyecto.Infrastructure.Mapping;
@@ -18,14 +18,14 @@ namespace Proyecto.Infrastructure.Persistence.Repositories
             _userManager = userManager;
         }
 
-        public async Task<Usuario> AddToRoleAsync(Usuario usuario, string roleName)
+        public async Task<User> AddToRoleAsync(User usuario, string roleName)
         {
             var userDb = await _userManager.FindByEmailAsync(usuario.Email);
             var result = await _userManager.AddToRoleAsync(userDb, roleName);
             return usuario;
         }
 
-        public async Task<Usuario> CreateUser(Usuario usuario)
+        public async Task<User> CreateUser(User usuario)
         {
             var appIdentityUser = usuario.ToAppIdentityUser();
             var result = await _userManager.CreateAsync(appIdentityUser, usuario.Password);
@@ -41,7 +41,7 @@ namespace Proyecto.Infrastructure.Persistence.Repositories
             return null;
         }
 
-        public async Task<Usuario> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
